@@ -58,8 +58,27 @@
     <Folder Include="Properties" />
     <Folder Include="Tables" />
     <Folder Include="PreDeployment" />
+    <Folder Include="PostDeployment" />
+    <Folder Include="StoredProcedures" />
+    <Folder Include="PostDeployment\DefaultData" />
+    <Folder Include="ForeignKeys" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\tblQuestion.sql" />
+    <Build Include="Tables\tblAnswer.sql" />
+    <Build Include="Tables\tblQuestionAnswer.sql" />
+    <Build Include="ForeignKeys\tblQuestionAnswer_QuestionId.sql" />
+    <Build Include="ForeignKeys\tblQuestionAnswer_AnswerId.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <PreDeploy Include="PreDeployment\Script.PreDeployment1.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="PostDeployment\Script.PostDeployment1.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="PostDeployment\DefaultData\Questions.sql" />
+    <None Include="PostDeployment\DefaultData\Answers.sql" />
+    <None Include="PostDeployment\DefaultData\QuestionAnswers.sql" />
   </ItemGroup>
 </Project>
