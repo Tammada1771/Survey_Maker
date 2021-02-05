@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[tblAnswer]
 (
 	[Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, 
-    [Answer] TEXT NOT NULL
+    [Answer] VARCHAR(MAX) NOT NULL
 )
