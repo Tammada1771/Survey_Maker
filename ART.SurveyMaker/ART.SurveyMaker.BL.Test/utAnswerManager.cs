@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace ART.SurveyMaker.BL.Test
 {
     [TestClass]
-    public class UnitTest1
+    public class utAnswerManager
     {
         [TestMethod]
         public void TestMethod1()
