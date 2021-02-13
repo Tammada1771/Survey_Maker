@@ -7,7 +7,7 @@ using ART.SurveyMaker.BL.Models;
 using ART.SurveyMaker.PL;
 using Microsoft.EntityFrameworkCore.Storage;
 
-namespace ART.QuestionAnswerTracker.BL
+namespace ART.SurveyMaker.BL
 {
     public static class QuestionAnswerManager
     {
