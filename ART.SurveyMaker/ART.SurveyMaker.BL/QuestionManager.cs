@@ -163,7 +163,8 @@ namespace ART.SurveyMaker.BL
                         .ForEach(c => questions.Add(new Question
                         {
                             Id = c.Id,
-                            Text = c.Question
+                            Text = c.Question,
+
                         }));
                     return questions;
                 }
@@ -174,6 +175,7 @@ namespace ART.SurveyMaker.BL
                 throw ex;
             }
         }
+
 
 
     }
