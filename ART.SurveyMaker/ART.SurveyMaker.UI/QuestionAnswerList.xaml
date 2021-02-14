@@ -1,0 +1,27 @@
+﻿<Window x:Class="ART.SurveyMaker.UI.QuestionAnswerList"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ART.SurveyMaker.UI"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="Yellow" Offset="0"/>
+                <GradientStop Color="Green" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+
+        <DataGrid x:Name="grdQuestions" HorizontalAlignment="Left" Height="358" Margin="10,10,0,0" VerticalAlignment="Top" Width="648"/>
+        <ComboBox HorizontalAlignment="Left" Margin="630,373,0,0" VerticalAlignment="Top" Width="152" Height="36"/>
+        <Button x:Name="btnQuestion" Content="Questions" HorizontalAlignment="Left" VerticalAlignment="Top" Width="119" Margin="663,10,0,0" Height="38" Click="BtnQuestion_Click"/>
+        <Button x:Name="btnAnswer" Content="Answers" HorizontalAlignment="Left" VerticalAlignment="Top" Width="119" Margin="663,53,0,0" Height="38" Click="BtnAnswer_Click"/>
+        <Button x:Name="btnLoad" Content="Load" HorizontalAlignment="Left" VerticalAlignment="Top" Width="119" Margin="10,373,0,0" Height="38" Click="BtnLoad_Click"/>
+        <Button x:Name="btnNewQuestionAnswer" Content="New Q and A" HorizontalAlignment="Left" VerticalAlignment="Top" Width="119" Margin="134,373,0,0" Height="38" Click="BtnNewQuestionAnswer_Click" />
+        <Button x:Name="btnEditQuestionAnswer" Content="Edit Q and A" HorizontalAlignment="Left" VerticalAlignment="Top" Width="119" Margin="258,373,0,0" Height="38" Click="BtnEditQuestionAnswer_Click"/>
+        <Button x:Name="btnExport" Content="Export" HorizontalAlignment="Left" VerticalAlignment="Top" Width="119" Margin="382,373,0,0" Height="38" Click="BtnExport_Click"/>
+        <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="119" Margin="506,373,0,0" Height="38"/>
+    </Grid>
+</Window>
