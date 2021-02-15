@@ -17,6 +17,8 @@ namespace ART.SurveyMaker.UI
     /// <summary>
     /// Interaction logic for MaintainQuestionAnswer.xaml
     /// </summary>
+    /// this will look like maintain attributes
+
     public partial class MaintainQuestionAnswer : Window
     {
         public MaintainQuestionAnswer()
