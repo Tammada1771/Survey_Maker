@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ART.SurveyMaker.BL;
+using ART.SurveyMaker.BL.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,37 +22,41 @@ namespace ART.SurveyMaker.UI
     /// </summary>
     public partial class QuestionAnswerList : Window
     {
+
+        List<Question> questions;
+        List<Answer> answers;
+
         public QuestionAnswerList()
         {
             InitializeComponent();
+            Reload();
+
+            cboQuestions.DisplayMemberPath = "Text";
+            cboQuestions.SelectedValuePath = "Id";
+
+            this.Title = "Survey Maker";
         }
 
-        private void BtnNewQuestionAnswer_Click(object sender, RoutedEventArgs e)
+        private async void Reload()
         {
+            questions = (List<Question>)await QuestionManager.Load();
+            //answers = 
 
+            //cboAttribute.ItemsSource = questions;
         }
 
-        private void BtnLoad_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void BtnEditQuestionAnswer_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void BtnExport_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
 
         private void BtnQuestion_Click(object sender, RoutedEventArgs e)
         {
-
+            new MaintainQuestionAnswer(ScreenMode.Question).ShowDialog();
         }
 
         private void BtnAnswer_Click(object sender, RoutedEventArgs e)
+        {
+            new MaintainQuestionAnswer(ScreenMode.Answer).ShowDialog();
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }

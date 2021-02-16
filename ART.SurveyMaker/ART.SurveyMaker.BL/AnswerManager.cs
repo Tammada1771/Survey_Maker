@@ -150,6 +150,7 @@ namespace ART.SurveyMaker.BL
             }
         }
 
+
         public async static Task<IEnumerable<Answer>> Load()
         {
             try
@@ -174,6 +175,8 @@ namespace ART.SurveyMaker.BL
                 throw ex;
             }
         }
+
+
 
 
 

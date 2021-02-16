@@ -6,4 +6,9 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ART.SurveyMaker.BL.Models\ART.SurveyMaker.BL.Models.csproj" />
+    <ProjectReference Include="..\ART.SurveyMaker.BL\ART.SurveyMaker.BL.csproj" />
+  </ItemGroup>
+
 </Project>

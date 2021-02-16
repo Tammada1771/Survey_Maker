@@ -5,5 +5,11 @@
 		(NEWID(), 'Green'),
 		(NEWID(), 'Mooo'),
 		(NEWID(), 'Oink'),
-		(NEWID(), 'Woof')
+		(NEWID(), 'Woof'),
+		(NEWID(), 'Yellow'),
+		(NEWID(), 'White'),
+		(NEWID(), 'Purple'),
+		(NEWID(), 'Meow'),
+		(NEWID(), 'Chirp')
+
 END

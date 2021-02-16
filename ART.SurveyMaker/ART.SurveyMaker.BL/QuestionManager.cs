@@ -46,7 +46,7 @@ namespace ART.SurveyMaker.BL
         {
             try
             {
-                Question question = new Question {Text = text, };
+                Question question = new Question {Text = text };
                 await Insert(question);
                 return question.Id;
             }
@@ -175,6 +175,33 @@ namespace ART.SurveyMaker.BL
                 throw ex;
             }
         }
+
+        /*
+        public static List<Question> LoadQuestions()
+        {
+            try
+            {
+                List<Question> questions = new List<Question>();
+                using (SurveyMakerEntities dc = new SurveyMakerEntities())
+                {
+                    dc.tblQuestions
+                        .ToList()
+                        .ForEach(m => questions.Add(new Question
+                        {
+                            Id = m.Id,
+                            Text = m.Question,
+                            Answers = AnswerManager.LoadAnswers(m.Id)
+                        }));
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        */
 
 
 
