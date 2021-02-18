@@ -123,31 +123,29 @@ namespace ART.SurveyMaker.BL
 
         public async static Task<Question> LoadById(Guid id)
         {
-            try
+            Question question = new Question();
+
+            await Task.Run(() =>
             {
                 using (SurveyMakerEntities dc = new SurveyMakerEntities())
                 {
-                    tblQuestion tblquestion = dc.tblQuestions.FirstOrDefault(c => c.Id == id);
-                    Question question = new Question();
+                    tblQuestion tblquestion = dc.tblQuestions.FirstOrDefault(q => q.Id == id);
 
-                    if (tblquestion != null)
-                    {
-                        question.Id = tblquestion.Id;
-                        question.Text = tblquestion.Question;
 
-                        return question;
-                    }
-                    else
-                    {
-                        throw new Exception("Could not find the row");
-                    }
+                   question.Answers = new List<Answer>();
+                   foreach (tblQuestionAnswer qa in tblquestion.tblQuestionAnswers.ToList())
+                   {
+                      Answer answer = new Answer
+                      {
+                          Id = qa.AnswerId,
+                          IsCorrect = qa.IsCorrect,
+                          Text = qa.Answer.Answer
+                      };
+                      question.Answers.Add(answer);
+                   }
                 }
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
+            });
+            return question;
         }
 
         public async static Task<IEnumerable<Question>> Load()
@@ -176,23 +174,36 @@ namespace ART.SurveyMaker.BL
             }
         }
 
-        /*
-        public static List<Question> LoadQuestions()
+        public async static Task<List<Question>> LoadQuestions()
         {
             try
             {
                 List<Question> questions = new List<Question>();
-                using (SurveyMakerEntities dc = new SurveyMakerEntities())
+
+                await Task.Run(() =>
                 {
-                    dc.tblQuestions
-                        .ToList()
-                        .ForEach(m => questions.Add(new Question
+                    using (SurveyMakerEntities dc = new SurveyMakerEntities())
+                    {
+                        foreach (tblQuestion q in dc.tblQuestions.ToList())
                         {
-                            Id = m.Id,
-                            Text = m.Question,
-                            Answers = AnswerManager.LoadAnswers(m.Id)
-                        }));
-                }
+                            Question question = new Question { Id = q.Id, Text = q.Question };
+
+                            question.Answers = new List<Answer>();
+                            foreach (tblQuestionAnswer qa in q.tblQuestionAnswers.ToList())
+                            {
+                                Answer answer = new Answer
+                                {
+                                    Id = qa.AnswerId,
+                                    IsCorrect = qa.IsCorrect,
+                                    Text = qa.Answer.Answer
+                                };
+                                question.Answers.Add(answer);
+                            }
+                            questions.Add(question);
+                        }
+                    }
+                });
+                return questions;
             }
             catch (Exception ex)
             {
@@ -200,9 +211,6 @@ namespace ART.SurveyMaker.BL
                 throw ex;
             }
         }
-
-        */
-
 
 
     }

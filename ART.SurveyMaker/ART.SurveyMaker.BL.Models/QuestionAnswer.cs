@@ -12,5 +12,8 @@ namespace ART.SurveyMaker.BL.Models
         public Guid QuestionId { get; set; }
         public Guid AnswerId { get; set; }
         public bool IsCorrect { get; set; }
+
+        public string Question { get; set; }
+        public string Answer { get; set; }
     }
 }

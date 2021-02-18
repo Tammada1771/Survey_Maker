@@ -138,6 +138,7 @@ namespace ART.SurveyMaker.BL
                 using (SurveyMakerEntities dc = new SurveyMakerEntities())
                 {
                     tblQuestionAnswer tblquestionanswer = dc.tblQuestionAnswers.FirstOrDefault(c => c.Id == id);
+
                     QuestionAnswer questionanswer = new QuestionAnswer();
 
                     if (tblquestionanswer != null)
@@ -146,7 +147,8 @@ namespace ART.SurveyMaker.BL
                         questionanswer.AnswerId = tblquestionanswer.AnswerId;
                         questionanswer.QuestionId = tblquestionanswer.QuestionId;
                         questionanswer.IsCorrect = tblquestionanswer.IsCorrect;
-
+                        questionanswer.Question = tblquestionanswer.Question.Question;
+                        questionanswer.Answer = tblquestionanswer.Answer.Answer;
                         return questionanswer;
                     }
                     else
@@ -177,7 +179,10 @@ namespace ART.SurveyMaker.BL
                             Id = c.Id,
                             AnswerId = c.AnswerId,
                             QuestionId = c.QuestionId,
-                            IsCorrect = c.IsCorrect
+                            IsCorrect = c.IsCorrect,
+                            Question = c.Question.Question,
+                            Answer = c.Answer.Answer
+                           
                         }));
                     return questionanswers;
                 }

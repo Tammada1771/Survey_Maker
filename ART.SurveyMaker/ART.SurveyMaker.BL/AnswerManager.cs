@@ -42,6 +42,45 @@ namespace ART.SurveyMaker.BL
             }
         }
 
+        public async static Task<bool> BoolInsert(Answer answer, bool rollback = false)
+        {
+            try
+            {
+                IDbContextTransaction transaction = null;
+
+                using (SurveyMakerEntities dc = new SurveyMakerEntities())
+                {
+                    if (rollback) transaction = dc.Database.BeginTransaction();
+
+                    tblAnswer newrow = new tblAnswer();
+                    newrow.Id = Guid.NewGuid();
+                    newrow.Answer = answer.Text;
+
+                    answer.Id = newrow.Id;
+
+                    dc.tblAnswers.Add(newrow);
+                    int results = dc.SaveChanges();
+
+                    if (rollback) transaction.Rollback();
+                    bool r;
+                    if(results > 0)
+                    {
+                        r = true;
+                    }
+                    else
+                    {
+                        r = false;
+                    }
+                    return r;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
         public async static Task<Guid> Insert(string text, bool rollback = false)
         {
             try
@@ -141,6 +180,44 @@ namespace ART.SurveyMaker.BL
                     {
                         throw new Exception("Could not find the row");
                     }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public async static Task<List<Answer>> Load(Guid questionid)
+        {
+            try
+            {
+                List<Answer> answers = new List<Answer>();
+
+                using (SurveyMakerEntities dc = new SurveyMakerEntities())
+                {
+                    List<tblQuestionAnswer> tblquestionanswers = dc.tblQuestionAnswers.Where(qa => qa.QuestionId == questionid).ToList();
+
+                    if(tblquestionanswers != null)
+                    {
+
+                        foreach(tblQuestionAnswer qa in tblquestionanswers.ToList())
+                        {
+                            Answer ans = new Answer
+                            {
+                                Id = qa.AnswerId,
+                                Text = qa.Answer.Answer,
+                                IsCorrect = qa.IsCorrect
+                            };
+                            answers.Add(ans);
+                        };
+                    }
+                    else
+                    {
+                        throw new Exception("That Question was not found");
+                    }
+                    return answers;
                 }
             }
             catch (Exception ex)
