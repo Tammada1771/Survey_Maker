@@ -96,17 +96,17 @@
 	(NEWID(), @QuestionId, @AnswerId, 1)
 
 	/*Wrong Answers*/
-	SELECT @AnswerId = Id from tblAnswer where Answer = 'Moo'
-	INSERT INTO DBO.tblQuestionAnswer (Id, QuestionId, AnswerId, IsCorrect)
-	VALUES
-	(NEWID(), @QuestionId, @AnswerId, 0)
-
-	SELECT @AnswerId = Id from tblAnswer where Answer = 'Meow'
-	INSERT INTO DBO.tblQuestionAnswer (Id, QuestionId, AnswerId, IsCorrect)
-	VALUES
-	(NEWID(), @QuestionId, @AnswerId, 0)
-
 	SELECT @AnswerId = Id from tblAnswer where Answer = 'Woof'
+	INSERT INTO DBO.tblQuestionAnswer (Id, QuestionId, AnswerId, IsCorrect)
+	VALUES
+	(NEWID(), @QuestionId, @AnswerId, 0)
+
+	SELECT @AnswerId = Id from tblAnswer where Answer = 'Chirp'
+	INSERT INTO DBO.tblQuestionAnswer (Id, QuestionId, AnswerId, IsCorrect)
+	VALUES
+	(NEWID(), @QuestionId, @AnswerId, 0)
+
+	SELECT @AnswerId = Id from tblAnswer where Answer = 'Mooo'
 	INSERT INTO DBO.tblQuestionAnswer (Id, QuestionId, AnswerId, IsCorrect)
 	VALUES
 	(NEWID(), @QuestionId, @AnswerId, 0)
