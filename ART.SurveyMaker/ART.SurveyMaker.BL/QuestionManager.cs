@@ -42,12 +42,58 @@ namespace ART.SurveyMaker.BL
             }
         }
 
+        public static int SyncInsert(Question question, bool rollback = false)
+        {
+            try
+            {
+                IDbContextTransaction transaction = null;
+
+                using (SurveyMakerEntities dc = new SurveyMakerEntities())
+                {
+                    if (rollback) transaction = dc.Database.BeginTransaction();
+
+                    tblQuestion newrow = new tblQuestion();
+                    newrow.Id = Guid.NewGuid();
+                    newrow.Question = question.Text;
+
+                    question.Id = newrow.Id;
+
+                    dc.tblQuestions.Add(newrow);
+                    int results = dc.SaveChanges();
+
+                    if (rollback) transaction.Rollback();
+
+                    return results;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
         public async static Task<Guid> Insert(string text,  bool rollback = false)
         {
             try
             {
                 Question question = new Question {Text = text };
                 await Insert(question);
+                return question.Id;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public static Guid SyncInsert(string text, bool rollback = false)
+        {
+            try
+            {
+                Question question = new Question { Text = text };
+                SyncInsert(question);
                 return question.Id;
             }
             catch (Exception ex)
@@ -89,7 +135,71 @@ namespace ART.SurveyMaker.BL
             }
         }
 
+        public static int SyncDelete(Guid id, bool rollback = false)
+        {
+            try
+            {
+                IDbContextTransaction transaction = null;
+                using (SurveyMakerEntities dc = new SurveyMakerEntities())
+                {
+                    tblQuestion row = dc.tblQuestions.FirstOrDefault(c => c.Id == id);
+                    int results = 0;
+                    if (row != null)
+                    {
+                        if (rollback) transaction = dc.Database.BeginTransaction();
+
+                        dc.tblQuestions.Remove(row);
+
+                        results = dc.SaveChanges();
+                        if (rollback) transaction.Rollback();
+                        return results;
+                    }
+                    else
+                    {
+                        throw new Exception("Row was not found");
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public async static Task<int> Update(Question question, bool rollback = false)
+        {
+            try
+            {
+                IDbContextTransaction transaction = null;
+                using (SurveyMakerEntities dc = new SurveyMakerEntities())
+                {
+                    tblQuestion row = dc.tblQuestions.FirstOrDefault(c => c.Id == question.Id);
+                    int results = 0;
+                    if (row != null)
+                    {
+                        if (rollback) transaction = dc.Database.BeginTransaction();
+
+                        row.Question = question.Text;
+
+                        results = dc.SaveChanges();
+                        if (rollback) transaction.Rollback();
+                        return results;
+                    }
+                    else
+                    {
+                        throw new Exception("Row was not found");
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public static int SyncUpdate(Question question, bool rollback = false)
         {
             try
             {
@@ -162,7 +272,7 @@ namespace ART.SurveyMaker.BL
                         {
                             Id = c.Id,
                             Text = c.Question,
-
+                            Answers = c.Answers
                         }));
                     return questions;
                 }

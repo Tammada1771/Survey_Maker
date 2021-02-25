@@ -53,7 +53,7 @@ namespace ART.SurveyMaker.UI
             switch(screenMode)
             {
                 case ScreenMode.Question:
-                    questions = (List<Question>)await QuestionManager.Load();
+                    questions = (List<Question>)await QuestionManager.LoadQuestions();
                     cboAttribute.ItemsSource = questions;
                     break;
                 case ScreenMode.Answer:
@@ -79,16 +79,18 @@ namespace ART.SurveyMaker.UI
             switch(screenMode)
             {
                 case ScreenMode.Question:
-                    Task.Run(async () =>
-                    {
-                        await QuestionManager.Insert(new Question { Text = txtDescription.Text });
-                    });
+                    //Task.Run(async () =>
+                    //{
+                    //    await QuestionManager.Insert(new Question { Text = txtDescription.Text });
+                    //});
+                    QuestionManager.SyncInsert(new Question { Text = txtDescription.Text });
                     break;
                 case ScreenMode.Answer:
-                    Task.Run(async () =>
-                    {
-                        await AnswerManager.Insert(new Answer { Text = txtDescription.Text });
-                    });
+                    //Task.Run(async () =>
+                    //{
+                    //    await AnswerManager.Insert(new Answer { Text = txtDescription.Text });
+                    //});
+                    AnswerManager.SyncInsert(new Answer { Text = txtDescription.Text });
                     break;
             }
 
@@ -101,20 +103,26 @@ namespace ART.SurveyMaker.UI
             switch (screenMode)
             {
                 case ScreenMode.Question:
-                    Task.Run(async () =>
-                    {
-                        Question question = questions[cboAttribute.SelectedIndex];
-                        question.Text = txtDescription.Text;
-                        await QuestionManager.Update(question);
-                    });
+                    //Task.Run(async () =>
+                    //{
+                    //    Question question = questions[cboAttribute.SelectedIndex];
+                    //    question.Text = txtDescription.Text;
+                    //    await QuestionManager.Update(question);
+                    //});
+                    Question question = questions[cboAttribute.SelectedIndex];
+                    question.Text = txtDescription.Text;
+                    QuestionManager.SyncUpdate(question);
                     break;
                 case ScreenMode.Answer:
-                    Task.Run(async () =>
-                    {
-                        Answer answer = answers[cboAttribute.SelectedIndex];
-                        answer.Text = txtDescription.Text;
-                        await AnswerManager.Update(answer);
-                    });
+                    //Task.Run(async () =>
+                    //{
+                    //    Answer answer = answers[cboAttribute.SelectedIndex];
+                    //    answer.Text = txtDescription.Text;
+                    //    await AnswerManager.Update(answer);
+                    //});
+                    Answer answer = answers[cboAttribute.SelectedIndex];
+                    answer.Text = txtDescription.Text;
+                    AnswerManager.SyncUpdate(answer);
                     break;
             }
 
@@ -127,17 +135,20 @@ namespace ART.SurveyMaker.UI
             switch (screenMode)
             {
                 case ScreenMode.Question:
-                    Task.Run(async () =>
-                    {
-                        Guid id = questions[cboAttribute.SelectedIndex].Id;
-                        await QuestionManager.Delete(id);
-                    });
+                    //Task.Run(async () =>
+                    //{
+                    //    Guid id = questions[cboAttribute.SelectedIndex].Id;
+                    //    await QuestionManager.Delete(id);
+                    //});
+                    Guid id = questions[cboAttribute.SelectedIndex].Id;
+                    QuestionManager.SyncDelete(id);
                     break;
                 case ScreenMode.Answer:
-                    Task.Run(async () =>
-                    {
-                        await AnswerManager.Delete(answers[cboAttribute.SelectedIndex].Id);
-                    });
+                    //Task.Run(async () =>
+                    //{
+                    //    await AnswerManager.Delete(answers[cboAttribute.SelectedIndex].Id);
+                    //});
+                    AnswerManager.SyncDelete(answers[cboAttribute.SelectedIndex].Id);
                     break;
             }
 

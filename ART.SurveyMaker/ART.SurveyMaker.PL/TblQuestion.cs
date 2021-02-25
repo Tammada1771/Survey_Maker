@@ -17,7 +17,7 @@ namespace ART.SurveyMaker.PL
         public Guid Id { get; set; }
         public string Question { get; set; }
 
-        public List<Answer> Answers { get; set; }
+        public virtual List<Answer> Answers { get; set; }
 
         public virtual ICollection<tblQuestionAnswer> tblQuestionAnswers { get; set; }
     }

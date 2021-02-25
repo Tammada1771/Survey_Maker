@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="ART.SurveyMaker.UI.ucMaintainAnswer"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ART.SurveyMaker.UI"
+             mc:Ignorable="d" 
+             d:DesignHeight="30" d:DesignWidth="250">
+    <Grid>
+        <RadioButton x:Name="rdbtnAnswer" 
+                     HorizontalAlignment="Left" 
+                     Margin="0,10,0,0" 
+                     VerticalAlignment="Top" 
+                     Height="39"/>
+        <ComboBox x:Name="cboAnswers" 
+                  HorizontalAlignment="Left" 
+                  Margin="40,5,0,0" 
+                  VerticalAlignment="Top" 
+                  Width="140"/>
+        <Image x:Name="imgDelete"
+               Source="pack://siteoforigin:,,,/Resources/Delete.png"
+               HorizontalAlignment="Left"
+               Margin="200, 6, 0, 3"
+               VerticalAlignment="Top"
+               Width="35"
+               Height="22"
+               Stretch="Fill" />
+
+    </Grid>
+</UserControl>

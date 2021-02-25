@@ -42,6 +42,37 @@ namespace ART.SurveyMaker.BL
             }
         }
 
+        public static int SyncInsert(Answer answer, bool rollback = false)
+        {
+            try
+            {
+                IDbContextTransaction transaction = null;
+
+                using (SurveyMakerEntities dc = new SurveyMakerEntities())
+                {
+                    if (rollback) transaction = dc.Database.BeginTransaction();
+
+                    tblAnswer newrow = new tblAnswer();
+                    newrow.Id = Guid.NewGuid();
+                    newrow.Answer = answer.Text;
+
+                    answer.Id = newrow.Id;
+
+                    dc.tblAnswers.Add(newrow);
+                    int results = dc.SaveChanges();
+
+                    if (rollback) transaction.Rollback();
+
+                    return results;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
         public async static Task<bool> BoolInsert(Answer answer, bool rollback = false)
         {
             try
@@ -96,6 +127,21 @@ namespace ART.SurveyMaker.BL
             }
         }
 
+        public static Guid SyncInsert(string text, bool rollback = false)
+        {
+            try
+            {
+                Answer answer = new Answer { Text = text };
+                SyncInsert(answer);
+                return answer.Id;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
         public async static Task<int> Delete(Guid id, bool rollback = false)
         {
             try
@@ -128,7 +174,71 @@ namespace ART.SurveyMaker.BL
             }
         }
 
+        public static int SyncDelete(Guid id, bool rollback = false)
+        {
+            try
+            {
+                IDbContextTransaction transaction = null;
+                using (SurveyMakerEntities dc = new SurveyMakerEntities())
+                {
+                    tblAnswer row = dc.tblAnswers.FirstOrDefault(c => c.Id == id);
+                    int results = 0;
+                    if (row != null)
+                    {
+                        if (rollback) transaction = dc.Database.BeginTransaction();
+
+                        dc.tblAnswers.Remove(row);
+
+                        results = dc.SaveChanges();
+                        if (rollback) transaction.Rollback();
+                        return results;
+                    }
+                    else
+                    {
+                        throw new Exception("Row was not found");
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public async static Task<int> Update(Answer answer, bool rollback = false)
+        {
+            try
+            {
+                IDbContextTransaction transaction = null;
+                using (SurveyMakerEntities dc = new SurveyMakerEntities())
+                {
+                    tblAnswer row = dc.tblAnswers.FirstOrDefault(c => c.Id == answer.Id);
+                    int results = 0;
+                    if (row != null)
+                    {
+                        if (rollback) transaction = dc.Database.BeginTransaction();
+
+                        row.Answer = answer.Text;
+
+                        results = dc.SaveChanges();
+                        if (rollback) transaction.Rollback();
+                        return results;
+                    }
+                    else
+                    {
+                        throw new Exception("Row was not found");
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public static int SyncUpdate(Answer answer, bool rollback = false)
         {
             try
             {
@@ -203,6 +313,44 @@ namespace ART.SurveyMaker.BL
                     {
 
                         foreach(tblQuestionAnswer qa in tblquestionanswers.ToList())
+                        {
+                            Answer ans = new Answer
+                            {
+                                Id = qa.AnswerId,
+                                Text = qa.Answer.Answer,
+                                IsCorrect = qa.IsCorrect
+                            };
+                            answers.Add(ans);
+                        };
+                    }
+                    else
+                    {
+                        throw new Exception("That Question was not found");
+                    }
+                    return answers;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public static List<Answer> SyncLoad(Guid questionid)
+        {
+            try
+            {
+                List<Answer> answers = new List<Answer>();
+
+                using (SurveyMakerEntities dc = new SurveyMakerEntities())
+                {
+                    List<tblQuestionAnswer> tblquestionanswers = dc.tblQuestionAnswers.Where(qa => qa.QuestionId == questionid).ToList();
+
+                    if (tblquestionanswers != null)
+                    {
+
+                        foreach (tblQuestionAnswer qa in tblquestionanswers.ToList())
                         {
                             Answer ans = new Answer
                             {
