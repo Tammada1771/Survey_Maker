@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ART.SurveyMaker.UI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="680">
+        Title="MainWindow" Height="450" Width="680" WindowStartupLocation="CenterScreen">
     <Grid x:Name="grdAnswer">
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -17,7 +17,7 @@
         <ComboBox x:Name="cboQuestions" HorizontalAlignment="Left" Margin="136,52,0,0" VerticalAlignment="Top" Width="457" Height="36" SelectionChanged="ComboBox_SelectionChanged"/>
         <Button x:Name="btnQuestion" Content="Questions" HorizontalAlignment="Left" VerticalAlignment="Top" Width="175" Margin="50,350,0,25" Height="38" Click="BtnQuestion_Click"/>
         <Button x:Name="btnAnswer" Content="Answers" HorizontalAlignment="Left" VerticalAlignment="Top" Width="175" Margin="250,350,0,25" Height="38" Click="BtnAnswer_Click"/>
-        <Button x:Name="btnSave" Content="Save" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="450,350,0,25" Height="38"/>
+        <Button x:Name="btnSave" Content="Save" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="450,350,0,25" Height="38" Click="btnSave_Click"/>
         <Label Content="Choose a Question, then choose the correct answer" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.592,-0.589"/>
     </Grid>
 </Window>

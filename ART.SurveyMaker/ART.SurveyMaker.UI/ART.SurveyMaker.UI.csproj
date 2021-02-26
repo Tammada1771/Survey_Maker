@@ -7,12 +7,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Delete.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.0.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ART.SurveyMaker.BL.Models\ART.SurveyMaker.BL.Models.csproj" />
     <ProjectReference Include="..\ART.SurveyMaker.BL\ART.SurveyMaker.BL.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Delete.png" />
   </ItemGroup>
 
   <ItemGroup>

@@ -25,13 +25,21 @@ namespace ART.SurveyMaker.UI
 
         public List<Answer> answers;
 
-        public ucMaintainAnswer(Guid id)
+        public ucMaintainAnswer(Guid id = new Guid())
         {
             InitializeComponent();
 
             Reload();
 
-            cboAnswers.SelectedValue = id;
+            if(id != Guid.Empty)
+            {
+                cboAnswers.SelectedValue = id;
+            }
+            else
+            {
+                cboAnswers.SelectedValue = null;
+            }
+
         }
 
         public ucMaintainAnswer(int id)
@@ -42,6 +50,7 @@ namespace ART.SurveyMaker.UI
 
             cboAnswers.SelectedValue = id;
         }
+
 
         private async void Reload()
         {
@@ -54,6 +63,7 @@ namespace ART.SurveyMaker.UI
             cboAnswers.SelectedValuePath = "Id";
         }
 
+
         public Guid AttributeId
         {
             get { return (Guid)cboAnswers.SelectedValue; }
@@ -62,6 +72,12 @@ namespace ART.SurveyMaker.UI
         public string AttributeText
         {
             get { return cboAnswers.Text; }
+        }
+
+
+        private void cboAnswers_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //MessageBox.Show("Test");
         }
     }
 }

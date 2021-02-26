@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ART.SurveyMaker.UI"
              mc:Ignorable="d" 
-             d:DesignHeight="30" d:DesignWidth="250">
+             d:DesignHeight="50" d:DesignWidth="400">
     <Grid>
         <RadioButton x:Name="rdbtnAnswer" 
                      HorizontalAlignment="Left" 
@@ -14,16 +14,16 @@
                      Height="39"/>
         <ComboBox x:Name="cboAnswers" 
                   HorizontalAlignment="Left" 
-                  Margin="40,5,0,0" 
+                  Margin="35,5,0,0" 
                   VerticalAlignment="Top" 
-                  Width="140"/>
+                  Width="275" SelectionChanged="cboAnswers_SelectionChanged"/>
         <Image x:Name="imgDelete"
-               Source="pack://siteoforigin:,,,/Resources/Delete.png"
+               Source="/Delete.png"
                HorizontalAlignment="Left"
-               Margin="200, 6, 0, 3"
+               Margin="350, 5, 0, 0"
                VerticalAlignment="Top"
-               Width="35"
-               Height="22"
+               Width="25"
+               Height="25"
                Stretch="Fill" />
 
     </Grid>
