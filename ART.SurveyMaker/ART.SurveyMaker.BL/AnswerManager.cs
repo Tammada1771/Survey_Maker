@@ -337,7 +337,7 @@ namespace ART.SurveyMaker.BL
             }
         }
 
-        public static List<Answer> SyncLoad(Guid questionid)
+        public static List<Answer> SyncLoadByQuestionId(Guid questionid)
         {
             try
             {
@@ -377,6 +377,31 @@ namespace ART.SurveyMaker.BL
 
 
         public async static Task<IEnumerable<Answer>> Load()
+        {
+            try
+            {
+                List<Answer> answers = new List<Answer>();
+
+                using (SurveyMakerEntities dc = new SurveyMakerEntities())
+                {
+                    dc.tblAnswers
+                        .ToList()
+                        .ForEach(c => answers.Add(new Answer
+                        {
+                            Id = c.Id,
+                            Text = c.Answer
+                        }));
+                    return answers;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public static List<Answer> SyncLoad()
         {
             try
             {

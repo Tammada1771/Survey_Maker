@@ -23,9 +23,10 @@ namespace ART.SurveyMaker.UI
     public partial class QuestionAnswerList : Window
     {
         ucMaintainAnswer[] ucAnswers = new ucMaintainAnswer[4];
+        ucAddAnswer[] ucAdds = new ucAddAnswer[4];
         List<Question> questions;
         List<Answer> answers;
-        List<Guid> answersIds = new List<Guid>();
+
 
         public QuestionAnswerList()
         {
@@ -46,111 +47,92 @@ namespace ART.SurveyMaker.UI
         }
 
 
-        private void DrawScreen(List<Answer> answers)
+        private void DrawScreen(Question question)
         {
-            answersIds.Clear();
             int i = 0;
-            int count = answers.Count;
+            int count = question.Answers.Count;
+            int margin = 100;
 
-            if (count == 4)
+            foreach (Answer a in question.Answers)
             {
-                foreach (Answer ans in answers)
+                switch (count)
                 {
-                    switch (i)
-                    {
-                        case 0:
-                            ucMaintainAnswer ucAnswer = new ucMaintainAnswer(ans.Id);
-                            //ucAnswer.imgDelete.MouseLeftButtonUp += ImgDelete_MouseLeftButtonUp;
-                            ucAnswer.Name = "Spot0";
-                            ucAnswer.imgDelete.MouseDown += (sender, e) => ImgDelete_MouseDown(sender, e, ans.Id, ucAnswer.Name);
-                            answersIds.Add(ans.Id);
-                            ucAnswer.Margin = new Thickness(100, 100, 0, 0);
-                            grdAnswer.Children.Add(ucAnswer);
-                            ucAnswers[i] = ucAnswer;
-                            break;
-                        case 1:
-                            ucMaintainAnswer ucAnswer1 = new ucMaintainAnswer(ans.Id);
-                            //ucAnswer1.imgDelete.MouseLeftButtonUp += ImgDelete_MouseLeftButtonUp;
-                            ucAnswer1.Name = "Spot1";
-                            ucAnswer1.imgDelete.MouseDown += (sender, e) => ImgDelete_MouseDown(sender, e, ans.Id, ucAnswer1.Name);
-                            answersIds.Add(ans.Id);
-                            ucAnswer1.Margin = new Thickness(100, 150, 0, 0);
-                            grdAnswer.Children.Add(ucAnswer1);
-                            ucAnswers[i] = ucAnswer1;
-                            break;
-                        case 2:
-                            ucMaintainAnswer ucAnswer2 = new ucMaintainAnswer(ans.Id);
-                            //ucAnswer2.imgDelete.MouseLeftButtonUp += ImgDelete_MouseLeftButtonUp;
-                            ucAnswer2.Margin = new Thickness(100, 200, 0, 0);
-                            ucAnswer2.Name = "Spot2";
-                            ucAnswer2.imgDelete.MouseDown += (sender, e) => ImgDelete_MouseDown(sender, e, ans.Id, ucAnswer2.Name);
-                            answersIds.Add(ans.Id);
-                            grdAnswer.Children.Add(ucAnswer2);
-                            ucAnswers[i] = ucAnswer2;
-                            break;
-                        case 3:
-                            ucMaintainAnswer ucAnswer3 = new ucMaintainAnswer(ans.Id);
-                            //ucAnswer3.imgDelete.MouseLeftButtonUp += ImgDelete_MouseLeftButtonUp;
-                            ucAnswer3.Margin = new Thickness(100, 250, 0, 0);
-                            ucAnswer3.Name = "Spot3";
-                            ucAnswer3.imgDelete.MouseDown += (sender, e) => ImgDelete_MouseDown(sender, e, ans.Id, ucAnswer3.Name);
-                            answersIds.Add(ans.Id);
+                    case 4:
+                        ucMaintainAnswer ucAnswer4 = new ucMaintainAnswer(a.Id);
+                        ucAnswer4.imgDelete.MouseDown += (sender, e) => ImgDelete_MouseDown(sender, e, a.Id, i);
+                        ucAnswer4.Margin = new Thickness(100, margin, 0, 0);
+                        grdAnswer.Children.Add(ucAnswer4);
+                        ucAnswers[i] = ucAnswer4;
+                        i++;
+                        margin += 50;
+                        break;
+                    case 3:
+                        ucMaintainAnswer ucAnswer3 = new ucMaintainAnswer(a.Id);
+                        ucAnswer3.imgDelete.MouseDown += (sender, e) => ImgDelete_MouseDown(sender, e, a.Id, i);
+                        ucAnswer3.Margin = new Thickness(100, margin, 0, 0);
+                        grdAnswer.Children.Add(ucAnswer3);
+                        ucAnswers[i] = ucAnswer3;
+                        i++;
+                        margin += 50;
+                        if (margin == 200)
+                        {
+                            ucAddAnswer ucAdd = new ucAddAnswer();
 
-                            grdAnswer.Children.Add(ucAnswer3);
-                            ucAnswers[i] = ucAnswer3;
-                            break;
-                    }
 
-                    i++;
-                } 
-            }
-            else
-            {
-                var margin = 100;
-                if(count == 0)
-                {
-                    count++;
+                        }
+                        break;
+                    case 2:
+                        ucMaintainAnswer ucAnswer2 = new ucMaintainAnswer(a.Id);
+                        ucAnswer2.imgDelete.MouseDown += (sender, e) => ImgDelete_MouseDown(sender, e, a.Id, i);
+                        ucAnswer2.Margin = new Thickness(100, margin, 0, 0);
+                        grdAnswer.Children.Add(ucAnswer2);
+                        ucAnswers[i] = ucAnswer2;
+                        i++;
+                        margin += 50;
+                        break;
+                    case 1:
+                        ucMaintainAnswer ucAnswer1 = new ucMaintainAnswer(a.Id);
+                        ucAnswer1.imgDelete.MouseDown += (sender, e) => ImgDelete_MouseDown(sender, e, a.Id, i);
+                        ucAnswer1.Margin = new Thickness(100, margin, 0, 0);
+                        grdAnswer.Children.Add(ucAnswer1);
+                        ucAnswers[i] = ucAnswer1;
+                        i++;
+                        margin += 50;
+                        break;
+                    case 0:
+                        //add four new answer adds
+                        break;
                 }
-
-                for(i = count; i == 4; i++ )
-                {
-                    ucMaintainAnswer ucAnswer = new ucMaintainAnswer();
-                    //ucAnswer.imgDelete.MouseLeftButtonUp += ImgDelete_MouseLeftButtonUp;
-                    ucAnswer.imgDelete.MouseDown += (sender, e) => ImgDelete_MouseDown(sender, e);
-                    ucAnswer.Margin = new Thickness(100, margin, 0, 0);
-                    grdAnswer.Children.Add(ucAnswer);
-                    ucAnswers[i] = ucAnswer;
-                    margin += 50;
-                }
-                
             }
-            
         }
 
-        private void ImgDelete_MouseDown(object sender, MouseButtonEventArgs e, Guid id = new Guid(), string name = "")
+        private void ImgDelete_MouseDown(object sender, MouseButtonEventArgs e, Guid id = new Guid(), int i = 0)
         {
-            
             var questionId = questions[cboQuestions.SelectedIndex].Id;
-            answers = (List<Answer>)AnswerManager.SyncLoad(questionId);
             ucMaintainAnswer ucAnswer = new ucMaintainAnswer();
             Guid answerId = new Guid();
-            ucAnswer.Name = name;
             answerId = id;
+            QuestionAnswerManager.SyncDelete(questionId, answerId);
+            grdAnswer.Children.Remove(ucAnswer);
+
+            var question = QuestionManager.SyncLoadById(questionId);
+
+            DrawScreen(question);
 
 
-            if (answers.Count == 0 || answers.Count < 4)
-            {
-                MessageBox.Show("Please Save your Answers First");
-            }
-            else if (answers.Count == 4)
-            { 
-                QuestionAnswerManager.SyncDelete(questionId, answerId);
-                grdAnswer.Children.Remove(ucAnswer);
-            }
+            //if (answers.Count == 0 || answers.Count < 4)
+            //{
+            //    MessageBox.Show("Please Save your Answers First");
+            //}
+            //else if (answers.Count == 4)
+            //{ 
+            //    QuestionAnswerManager.SyncDelete(questionId, answerId);
+            //    grdAnswer.Children.Remove(ucAnswer);
+            //}
 
-            answers = (List<Answer>)AnswerManager.SyncLoad(questionId);
+            //answers = (List<Answer>)AnswerManager.SyncLoad(questionId);
 
-            DrawScreen(answers);
+            //DrawScreen(answers);
         }
 
 
@@ -166,44 +148,32 @@ namespace ART.SurveyMaker.UI
             
         }
 
-        private async void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var questionId = questions[cboQuestions.SelectedIndex].Id;
-            answers = (List<Answer>)AnswerManager.SyncLoad(questionId);
-            questions = await QuestionManager.LoadQuestions();
-
-            //USE THIS MORE!! MORON
-            ////foreach(Question q in questions)
-            ////{
-            ////    q.Answers
-            ////}
+            var question = QuestionManager.SyncLoadById(questionId);
             
-            DrawScreen(answers);
+            DrawScreen(question);
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            foreach(ucMaintainAnswer ucans in ucAnswers)
+            foreach(ucMaintainAnswer ucMA in ucAnswers)
             {
-                var questionId = questions[cboQuestions.SelectedIndex].Id;
-                var answerId = ucans.AttributeId;
-                bool RorW = (bool)ucans.rdbtnAnswer.IsChecked;
-                
+                QuestionAnswer qa = new QuestionAnswer();
+                qa.QuestionId = questions[cboQuestions.SelectedIndex].Id;
+                qa.AnswerId = ucMA.AttributeId;
+                qa.IsCorrect = (bool)ucMA.rdbtnAnswer.IsChecked;
 
-                var selectcheck = QuestionAnswerManager.Select(questionId, answerId);
+                var row = QuestionAnswerManager.Select(qa.QuestionId, qa.AnswerId, qa.IsCorrect);
 
-                if(selectcheck == null)
+                if(row == null)
                 {
-                    QuestionAnswer questionanswer = new QuestionAnswer();
-
-                    questionanswer.QuestionId = questionId;
-                    questionanswer.AnswerId = answerId;
-                    questionanswer.IsCorrect = RorW;
-
-                    QuestionAnswerManager.SyncInsert(questionanswer);
-                } 
-
+                    QuestionAnswerManager.SyncInsert(qa);
+                }
             }
+
+            MessageBox.Show("Answers Saved");
         }
     }
 }

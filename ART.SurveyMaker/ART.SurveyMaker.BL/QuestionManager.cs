@@ -258,6 +258,30 @@ namespace ART.SurveyMaker.BL
             return question;
         }
 
+        public static Question SyncLoadById(Guid id)
+        {
+            Question question = new Question();
+
+                using (SurveyMakerEntities dc = new SurveyMakerEntities())
+                {
+                    tblQuestion tblquestion = dc.tblQuestions.FirstOrDefault(q => q.Id == id);
+
+
+                    question.Answers = new List<Answer>();
+                    foreach (tblQuestionAnswer qa in tblquestion.tblQuestionAnswers.ToList())
+                    {
+                        Answer answer = new Answer
+                        {
+                            Id = qa.AnswerId,
+                            IsCorrect = qa.IsCorrect,
+                            Text = qa.Answer.Answer
+                        };
+                        question.Answers.Add(answer);
+                    }
+                }
+            return question;
+        }
+
         public async static Task<IEnumerable<Question>> Load()
         {
             try

@@ -217,13 +217,19 @@ namespace ART.SurveyMaker.BL
             }
         }
 
-        public static tblQuestionAnswer Select(Guid questionid, Guid answerid)
+        public static tblQuestionAnswer Select(Guid questionid, Guid answerid, bool ischecked)
         {
             try
             {
                 using(SurveyMakerEntities dc = new SurveyMakerEntities())
                 {
-                    tblQuestionAnswer row = dc.tblQuestionAnswers.FirstOrDefault(c => c.QuestionId == questionid && c.AnswerId == answerid);
+                    tblQuestionAnswer row = dc.tblQuestionAnswers.FirstOrDefault(c => c.QuestionId == questionid && c.AnswerId == answerid && c.IsCorrect == ischecked);
+                    tblQuestionAnswer difrow = dc.tblQuestionAnswers.FirstOrDefault(c => c.QuestionId == questionid && c.AnswerId == answerid);
+
+                    if(row != difrow)
+                    {
+                        SyncDelete(difrow.QuestionId, difrow.AnswerId);
+                    }
 
                     return row;
                 }
